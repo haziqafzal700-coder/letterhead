@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>West London Security Ltd - Professional Letterhead A4</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -17,28 +17,29 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #e2e8f0;
-            padding: 30px 20px;
+            padding: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            min-height: 100vh;
         }
 
-        /* Toolbar */
+        /* Toolbar - Mobile Friendly */
         .toolbar {
-            max-width: 800px;
             width: 100%;
-            margin: 0 auto 20px;
+            max-width: 500px;
+            margin: 0 auto 15px;
             background: white;
-            border-radius: 60px;
-            padding: 12px 25px;
+            border-radius: 50px;
+            padding: 8px 12px;
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             position: sticky;
-            top: 15px;
+            top: 10px;
             z-index: 100;
         }
 
@@ -46,14 +47,14 @@
             background: #0f172a;
             color: white;
             border: none;
-            padding: 10px 22px;
+            padding: 6px 12px;
             border-radius: 40px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 11px;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
             transition: all 0.3s;
         }
 
@@ -66,42 +67,35 @@
             background: #dc2626;
         }
 
-        .toolbar .pdf-btn:hover {
-            background: #b91c1c;
-        }
-
         .toolbar .save-btn {
             background: #059669;
         }
 
-        /* A4 SIZE CONTAINER - EXACT 210mm x 297mm */
+        /* Mobile Scroll Container - FIXED */
         .letter-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: block;
+            width: 100%;
             background: #e2e8f0;
-            padding: 10px;
+            overflow-x: auto;
+            overflow-y: visible;
+            -webkit-overflow-scrolling: touch;
         }
 
+        /* A4 SIZE CONTAINER */
         #letterContainer {
             width: 210mm;
             min-width: 210mm;
-            max-width: 210mm;
             background: white;
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             overflow: hidden;
             margin: 0 auto;
         }
 
-        /* A4 CONTENT - EXACT ONE PAGE */
+        /* A4 CONTENT */
         #letterContent {
             background: white;
             width: 100%;
             height: auto;
-            min-height: 297mm;
-            page-break-after: avoid;
-            page-break-inside: avoid;
-            break-inside: avoid;
             position: relative;
         }
 
@@ -116,7 +110,7 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
         }
 
         .logo-area {
@@ -124,12 +118,13 @@
             align-items: center;
             gap: 12px;
             cursor: pointer;
+            flex: 1;
         }
 
         .logo-box {
-            width: 65px;
-            height: 65px;
-            background: #f97316;
+            width: 55px;
+            height: 55px;
+            /* background: #f97316; */
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -144,51 +139,49 @@
         }
 
         .logo-placeholder {
-            font-size: 32px;
+            font-size: 30px;
             color: white;
         }
-.logo-placeholder img   {
-    width: 200px;
-}
+
         .company-title h2 {
             color: white;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 800;
         }
 
         .company-title p {
             color: #f97316;
             font-size: 7px;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             font-weight: 600;
         }
 
         .sia-badge {
             background: rgba(255,255,255,0.1);
             padding: 4px 10px;
-            border-radius: 25px;
+            border-radius: 20px;
             text-align: center;
         }
 
         .sia-badge span {
             color: #f97316;
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 600;
         }
 
         .sia-badge p {
             color: white;
-            font-size: 7px;
+            font-size: 6px;
         }
 
         /* Contact Bar */
         .contact-bar {
             background: rgba(255,255,255,0.05);
-            padding: 6px 20px;
+            padding: 8px 20px;
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 8px;
             border-top: 1px solid rgba(255,255,255,0.08);
             font-size: 8px;
         }
@@ -196,7 +189,7 @@
         .contact-item {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
             color: #cbd5e1;
         }
 
@@ -213,29 +206,30 @@
 
         /* Content */
         .letter-content {
-            padding: 15px 20px;
+            padding: 20px 25px;
+            padding-bottom: 60px;
         }
 
         .info-row {
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 12px;
+            gap: 15px;
+            margin-bottom: 15px;
         }
 
         .company-box {
             background: #f8fafc;
-            padding: 6px 12px;
-            border-radius: 6px;
+            padding: 8px 15px;
+            border-radius: 8px;
             border-left: 3px solid #f97316;
-            font-size: 9px;
+            font-size: 10px;
             line-height: 1.4;
         }
 
         .ref-number {
             background: #f1f5f9;
-            padding: 2px 6px;
+            padding: 2px 8px;
             border-radius: 15px;
             font-size: 9px;
             font-weight: 600;
@@ -244,60 +238,59 @@
         }
 
         .recipient {
-            margin-bottom: 12px;
-            font-size: 10px;
-            line-height: 1.4;
+            margin-bottom: 15px;
+            font-size: 11px;
+            line-height: 1.5;
         }
 
         .subject {
             background: #fef3c7;
-            padding: 6px 12px;
-            border-radius: 6px;
-            margin-bottom: 12px;
+            padding: 8px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
             border-left: 3px solid #f97316;
-            font-size: 10px;
+            font-size: 11px;
         }
 
         .body-text {
             color: #334155;
-            font-size: 10px;
-            line-height: 1.5;
-            margin-bottom: 12px;
+            font-size: 11px;
+            line-height: 1.6;
+            margin-bottom: 15px;
         }
 
         .body-text p {
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
 
         .signature {
-            margin-top: 12px;
-            padding-top: 12px;
+            margin-top: 15px;
+            padding-top: 15px;
             border-top: 1px solid #e2e8f0;
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 15px;
         }
 
         .sign-line {
             width: 120px;
             height: 1px;
             background: #cbd5e1;
-            margin: 12px 0 4px;
+            margin: 12px 0 5px;
         }
-
+.logo-placeholder img{
+    width: 200px;
+}
         .letter-footer {
             background: #0f172a;
-            padding: 6px 20px;
+            padding: 8px 25px;
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 8px;
             font-size: 7px;
             color: #94a3b8;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
         }
 
         /* Editable Styles */
@@ -316,7 +309,7 @@
             background: #fff3e0;
             border: 2px solid #f97316;
             border-radius: 6px;
-            padding: 4px 6px;
+            padding: 4px 8px;
             font-family: inherit;
             font-size: inherit;
             width: 100%;
@@ -332,7 +325,95 @@
             display: block;
         }
 
-        /* PRINT STYLES - A4 EXACT */
+        /* Mobile Styles - FIXED */
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+            
+            .toolbar {
+                position: relative;
+                top: 0;
+                margin-bottom: 10px;
+            }
+            
+            .toolbar button {
+                padding: 5px 10px;
+                font-size: 10px;
+            }
+            
+            /* Make A4 scrollable on mobile */
+            .letter-wrapper {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 10px;
+            }
+            
+            #letterContainer {
+                margin: 0;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            }
+            
+            /* Ensure text is readable */
+            .letter-content {
+                padding: 15px 18px;
+                padding-bottom: 50px;
+            }
+            
+            .company-title h2 {
+                font-size: 14px;
+            }
+            
+            .logo-box {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .contact-bar {
+                padding: 6px 15px;
+                gap: 6px;
+            }
+            
+            .contact-item {
+                font-size: 7px;
+            }
+        }
+
+        /* Small Mobile */
+        @media (max-width: 480px) {
+            .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .logo-area {
+                width: 100%;
+            }
+            
+            .sia-badge {
+                align-self: flex-start;
+            }
+            
+            .contact-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .info-row {
+                flex-direction: column;
+            }
+            
+            .signature {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .sign-line {
+                width: 100%;
+            }
+        }
+
+        /* PRINT STYLES */
         @media print {
             .toolbar { display: none; }
             body { 
@@ -346,20 +427,14 @@
                 margin: 0; 
                 padding: 0;
                 background: white;
+                overflow: visible;
             }
             #letterContainer { 
                 box-shadow: none; 
                 border-radius: 0;
                 width: 100%;
-                max-width: 100%;
                 margin: 0;
                 padding: 0;
-            }
-            #letterContent {
-                height: auto;
-                page-break-after: avoid;
-                page-break-inside: avoid;
-                break-inside: avoid;
             }
             .editable:hover { background: none; }
             .letter-header, .letter-footer {
@@ -371,28 +446,13 @@
                 margin: 0;
             }
         }
-
-        /* Mobile Responsive - Scale for viewing */
-        @media (max-width: 220mm) {
-            body {
-                transform: scale(0.95);
-                transform-origin: top center;
-            }
-        }
-        
-        @media (max-width: 600px) {
-            body {
-                transform: scale(0.9);
-                transform-origin: top center;
-            }
-        }
     </style>
 </head>
 <body>
 
 <div class="toolbar">
     <button onclick="saveAllChanges()" class="save-btn"><i class="fa-regular fa-floppy-disk"></i> Save</button>
-    <button onclick="downloadPDF()" class="pdf-btn"><i class="fa-regular fa-file-pdf"></i> Download PDF</button>
+    <button onclick="downloadPDF()" class="pdf-btn"><i class="fa-regular fa-file-pdf"></i> PDF</button>
     <button onclick="window.print()"><i class="fa-solid fa-print"></i> Print</button>
     <button onclick="resetLetterhead()"><i class="fa-regular fa-trash-can"></i> Reset</button>
 </div>
@@ -465,12 +525,12 @@
                     <div>
                         <div class="sign-line"></div>
                         <div class="editable" data-field="signName1" style="font-weight:600;">John Smith</div>
-                        <div class="editable" data-field="signTitle1" style="font-size:9px;color:#64748b;">Operations Director</div>
+                        <div class="editable" data-field="signTitle1" style="font-size:10px;color:#64748b;">Operations Director</div>
                     </div>
                     <div>
                         <div class="sign-line"></div>
                         <div class="editable" data-field="signName2" style="font-weight:600;">Sarah Johnson</div>
-                        <div class="editable" data-field="signTitle2" style="font-size:9px;color:#64748b;">Security Manager</div>
+                        <div class="editable" data-field="signTitle2" style="font-size:10px;color:#64748b;">Security Manager</div>
                     </div>
                     <div>
                         <div class="sign-line"></div>
@@ -493,18 +553,8 @@
     const today = new Date();
     document.getElementById('dateField').innerText = today.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
 
-    // Default logo image (base64 of a simple shield - will show if no logo uploaded)
+    // Default logo
     const defaultLogo = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>');
-    
-    // Check if default logo should be shown
-    function checkAndSetDefaultLogo() {
-        const savedLogo = localStorage.getItem('companyLogo');
-        const logoBox = document.getElementById('logoBox');
-        if (logoBox && (!savedLogo || savedLogo === 'null' || savedLogo === 'undefined' || savedLogo.length < 100)) {
-            // Show default logo
-            logoBox.innerHTML = `<img src="${defaultLogo}" style="width:100%; height:100%; object-fit:contain; padding: 12px;">`;
-        }
-    }
 
     // Make all editable fields clickable
     document.querySelectorAll('.editable').forEach(field => {
@@ -529,16 +579,16 @@
             input.rows = 3;
             input.style.width = '100%';
             input.style.padding = '4px';
-            input.style.borderRadius = '6px';
+            input.style.borderRadius = '5px';
             input.style.border = '2px solid #f97316';
             input.style.fontFamily = 'inherit';
-            input.style.fontSize = '10px';
+            input.style.fontSize = '11px';
         } else {
             input = document.createElement('input');
             input.type = 'text';
             input.style.width = '100%';
             input.style.padding = '3px 5px';
-            input.style.borderRadius = '6px';
+            input.style.borderRadius = '5px';
             input.style.border = '2px solid #f97316';
             input.style.fontFamily = 'inherit';
             input.style.fontSize = 'inherit';
@@ -600,8 +650,8 @@
             title: 'Saved!',
             text: 'All your changes have been saved successfully.',
             confirmButtonColor: '#f97316',
-            timer: 2000,
-            showConfirmButton: true
+            timer: 1500,
+            showConfirmButton: false
         });
     }
 
@@ -615,7 +665,7 @@
             if (savedLogo && savedLogo !== 'null' && savedLogo !== 'undefined' && savedLogo.length > 100) {
                 logoBox.innerHTML = `<img src="${savedLogo}" style="width:100%; height:100%; object-fit:contain;">`;
             } else {
-                logoBox.innerHTML = `<img src="${defaultLogo}" style="width:100%; height:100%; object-fit:contain; padding: 12px;">`;
+                logoBox.innerHTML = `<img src="${defaultLogo}" style="width:100%; height:100%; object-fit:contain; padding: 10px;">`;
             }
         }
         
@@ -643,7 +693,7 @@
             showCancelButton: true,
             confirmButtonColor: '#dc2626',
             cancelButtonColor: '#64748b',
-            confirmButtonText: 'Yes, reset it',
+            confirmButtonText: 'Yes, reset',
             cancelButtonText: 'Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
@@ -656,8 +706,8 @@
 
     function uploadLogo() {
         Swal.fire({
-            title: 'Upload Company Logo',
-            html: '<input type="file" id="logoFileInput" accept="image/*" style="padding:10px; border:2px solid #e2e8f0; border-radius:10px; width:100%;">',
+            title: 'Upload Logo',
+            html: '<input type="file" id="logoFileInput" accept="image/*" style="padding:8px; border:2px solid #e2e8f0; border-radius:8px; width:100%;">',
             showCancelButton: true,
             confirmButtonText: 'Upload',
             cancelButtonText: 'Cancel',
@@ -773,14 +823,14 @@
                     title: 'PDF Downloaded!',
                     text: 'Your A4 letterhead has been saved as PDF.',
                     confirmButtonColor: '#f97316',
-                    timer: 2000
+                    timer: 1500
                 });
             } catch (error) {
                 console.error('PDF Error:', error);
                 Swal.fire({
                     icon: 'error',
-                    title: 'PDF Generation Failed',
-                    text: 'Please use the Print button (Ctrl+P) instead.',
+                    title: 'PDF Failed',
+                    text: 'Please use Print (Ctrl+P) instead.',
                     confirmButtonColor: '#f97316'
                 });
             }
