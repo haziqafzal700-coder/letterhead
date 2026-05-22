@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>West London Security Ltd - Professional Letterhead A4</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #e2e8f0;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto 20px;
+            background: white;
+            border-radius: 60px;
+            padding: 12px 25px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 15px;
+            z-index: 100;
+        }
+
+        .toolbar button {
+            background: #0f172a;
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .toolbar button:hover {
+            background: #f97316;
+            transform: translateY(-2px);
+        }
+
+        .toolbar .pdf-btn {
+            background: #dc2626;
+        }
+
+        .toolbar .pdf-btn:hover {
+            background: #b91c1c;
+        }
+
+        .toolbar .save-btn {
+            background: #059669;
+        }
+
+        /* A4 SIZE CONTAINER - EXACT 210mm x 297mm */
+        .letter-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #e2e8f0;
+            padding: 10px;
+        }
+
+        #letterContainer {
+            width: 210mm;
+            min-width: 210mm;
+            max-width: 210mm;
+            background: white;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        /* A4 CONTENT - EXACT ONE PAGE */
+        #letterContent {
+            background: white;
+            width: 100%;
+            height: auto;
+            min-height: 297mm;
+            page-break-after: avoid;
+            page-break-inside: avoid;
+            break-inside: avoid;
+            position: relative;
+        }
+
+        /* Header */
+        .letter-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 15px 20px 12px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .logo-box {
+            width: 65px;
+            height: 65px;
+            background: #f97316;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-placeholder {
+            font-size: 32px;
+            color: white;
+        }
+.logo-placeholder img   {
+    width: 200px;
+}
+        .company-title h2 {
+            color: white;
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .company-title p {
+            color: #f97316;
+            font-size: 7px;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .sia-badge {
+            background: rgba(255,255,255,0.1);
+            padding: 4px 10px;
+            border-radius: 25px;
+            text-align: center;
+        }
+
+        .sia-badge span {
+            color: #f97316;
+            font-size: 9px;
+            font-weight: 600;
+        }
+
+        .sia-badge p {
+            color: white;
+            font-size: 7px;
+        }
+
+        /* Contact Bar */
+        .contact-bar {
+            background: rgba(255,255,255,0.05);
+            padding: 6px 20px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 6px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            font-size: 8px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #cbd5e1;
+        }
+
+        .contact-item i {
+            color: #f97316;
+            width: 12px;
+            font-size: 8px;
+        }
+
+        .divider {
+            height: 3px;
+            background: #f97316;
+        }
+
+        /* Content */
+        .letter-content {
+            padding: 15px 20px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .company-box {
+            background: #f8fafc;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border-left: 3px solid #f97316;
+            font-size: 9px;
+            line-height: 1.4;
+        }
+
+        .ref-number {
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 15px;
+            font-size: 9px;
+            font-weight: 600;
+            color: #f97316;
+            display: inline-block;
+        }
+
+        .recipient {
+            margin-bottom: 12px;
+            font-size: 10px;
+            line-height: 1.4;
+        }
+
+        .subject {
+            background: #fef3c7;
+            padding: 6px 12px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            border-left: 3px solid #f97316;
+            font-size: 10px;
+        }
+
+        .body-text {
+            color: #334155;
+            font-size: 10px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .body-text p {
+            margin-bottom: 5px;
+        }
+
+        .signature {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .sign-line {
+            width: 120px;
+            height: 1px;
+            background: #cbd5e1;
+            margin: 12px 0 4px;
+        }
+
+        .letter-footer {
+            background: #0f172a;
+            padding: 6px 20px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 7px;
+            color: #94a3b8;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Editable Styles */
+        .editable {
+            cursor: pointer;
+            position: relative;
+            transition: background 0.2s;
+        }
+
+        .editable:hover {
+            background: rgba(249, 115, 22, 0.1);
+            border-radius: 4px;
+        }
+
+        .editable input, .editable textarea {
+            background: #fff3e0;
+            border: 2px solid #f97316;
+            border-radius: 6px;
+            padding: 4px 6px;
+            font-family: inherit;
+            font-size: inherit;
+            width: 100%;
+            display: none;
+        }
+
+        .editable.editing .display-text {
+            display: none;
+        }
+
+        .editable.editing input,
+        .editable.editing textarea {
+            display: block;
+        }
+
+        /* PRINT STYLES - A4 EXACT */
+        @media print {
+            .toolbar { display: none; }
+            body { 
+                background: white; 
+                padding: 0; 
+                margin: 0;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .letter-wrapper { 
+                margin: 0; 
+                padding: 0;
+                background: white;
+            }
+            #letterContainer { 
+                box-shadow: none; 
+                border-radius: 0;
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            #letterContent {
+                height: auto;
+                page-break-after: avoid;
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            .editable:hover { background: none; }
+            .letter-header, .letter-footer {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            @page {
+                size: A4;
+                margin: 0;
+            }
+        }
+
+        /* Mobile Responsive - Scale for viewing */
+        @media (max-width: 220mm) {
+            body {
+                transform: scale(0.95);
+                transform-origin: top center;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                transform: scale(0.9);
+                transform-origin: top center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="toolbar">
+    <button onclick="saveAllChanges()" class="save-btn"><i class="fa-regular fa-floppy-disk"></i> Save</button>
+    <button onclick="downloadPDF()" class="pdf-btn"><i class="fa-regular fa-file-pdf"></i> Download PDF</button>
+    <button onclick="window.print()"><i class="fa-solid fa-print"></i> Print</button>
+    <button onclick="resetLetterhead()"><i class="fa-regular fa-trash-can"></i> Reset</button>
+</div>
+
+<div class="letter-wrapper">
+    <div id="letterContainer">
+        <div id="letterContent">
+            <!-- Header -->
+            <div class="letter-header">
+                <div class="header-top">
+                    <div class="logo-area" onclick="uploadLogo()">
+                        <div class="logo-box" id="logoBox">
+                            <div class="logo-placeholder" id="logoPreview"><img src="Gemini_Generated_Image_3lttz23lttz23ltt-removebg-preview (1).png" alt=""></div>
+                        </div>
+                        <div class="company-title">
+                            <h2 class="editable" data-field="companyName">West London Security Ltd</h2>
+                            <p class="editable" data-field="tagline">PROFESSIONAL SECURITY SOLUTIONS</p>
+                        </div>
+                    </div>
+                    <div class="sia-badge editable" data-field="siaBadge">
+                        <span>✓ SIA Approved</span>
+                        <p>Lic: 15415447</p>
+                    </div>
+                </div>
+                <div class="contact-bar">
+                    <div class="contact-item"><i class="fa-solid fa-location-dot"></i> <span class="editable" data-field="address">160 Waye Ave, Hounslow, TW5 9SF</span></div>
+                    <div class="contact-item"><i class="fa-solid fa-phone"></i> <span class="editable" data-field="phone">020 8123 4567</span></div>
+                    <div class="contact-item"><i class="fa-solid fa-envelope"></i> <span class="editable" data-field="email">info@westlondonsecurity.co.uk</span></div>
+                    <div class="contact-item"><i class="fa-solid fa-globe"></i> <span class="editable" data-field="website">www.westlondonsecurity.co.uk</span></div>
+                </div>
+            </div>
+            <div class="divider"></div>
+
+            <!-- Content -->
+            <div class="letter-content">
+                <div class="info-row">
+                    <div class="company-box editable" data-field="officeAddress">
+                        <strong>West London Security Ltd</strong><br>
+                        160 Waye Avenue, Hounslow<br>
+                        London, TW5 9SF, UK
+                    </div>
+                    <div>
+                        <p><strong>Date:</strong> <span class="editable" data-field="date" id="dateField"></span></p>
+                        <p><strong>Our Ref:</strong> <span class="editable ref-number" data-field="ourRef">WLS/2026/001</span></p>
+                        <p><strong>Your Ref:</strong> <span class="editable ref-number" data-field="yourRef">Client/001</span></p>
+                    </div>
+                </div>
+
+                <div class="recipient">
+                    <strong>TO:</strong><br>
+                    <span class="editable" data-field="clientName" style="font-weight:600;">[Client Name]</span><br>
+                    <span class="editable" data-field="clientCompany">[Company Name]</span><br>
+                    <span class="editable" data-field="clientAddress">[Address Line, City, Postcode]</span>
+                </div>
+
+                <div class="subject editable" data-field="subject">
+                    <strong>SUBJECT:</strong> <span>Security Services Quotation</span>
+                </div>
+
+                <div class="body-text editable" data-field="message">
+                    <p>Dear <span class="editable inline" data-field="clientNameShort">[Client Name]</span>,</p>
+                    <p>Thank you for choosing West London Security Ltd. We are pleased to provide the following quotation for professional security services.</p>
+                    <p><strong>Services:</strong> Static Guard | K9 Unit | Mobile Patrol</p>
+                    <p><strong>Total Amount:</strong> £17,100.00 (Including VAT)</p>
+                    <p>Please contact us for any queries.</p>
+                    <p>Yours sincerely,</p>
+                </div>
+
+                <div class="signature">
+                    <div>
+                        <div class="sign-line"></div>
+                        <div class="editable" data-field="signName1" style="font-weight:600;">John Smith</div>
+                        <div class="editable" data-field="signTitle1" style="font-size:9px;color:#64748b;">Operations Director</div>
+                    </div>
+                    <div>
+                        <div class="sign-line"></div>
+                        <div class="editable" data-field="signName2" style="font-weight:600;">Sarah Johnson</div>
+                        <div class="editable" data-field="signTitle2" style="font-size:9px;color:#64748b;">Security Manager</div>
+                    </div>
+                    <div>
+                        <div class="sign-line"></div>
+                        <div class="editable" data-field="companySeal">Company Seal</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="letter-footer">
+                <div class="editable" data-field="footerLeft">West London Security Ltd | Reg: 15415447</div>
+                <div class="editable" data-field="footerRight">24/7 Emergency: 020 8123 4567</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Set current date
+    const today = new Date();
+    document.getElementById('dateField').innerText = today.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+
+    // Default logo image (base64 of a simple shield - will show if no logo uploaded)
+    const defaultLogo = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>');
+    
+    // Check if default logo should be shown
+    function checkAndSetDefaultLogo() {
+        const savedLogo = localStorage.getItem('companyLogo');
+        const logoBox = document.getElementById('logoBox');
+        if (logoBox && (!savedLogo || savedLogo === 'null' || savedLogo === 'undefined' || savedLogo.length < 100)) {
+            // Show default logo
+            logoBox.innerHTML = `<img src="${defaultLogo}" style="width:100%; height:100%; object-fit:contain; padding: 12px;">`;
+        }
+    }
+
+    // Make all editable fields clickable
+    document.querySelectorAll('.editable').forEach(field => {
+        if (!field.hasAttribute('data-listener')) {
+            field.setAttribute('data-listener', 'true');
+            field.addEventListener('click', (e) => {
+                e.stopPropagation();
+                makeEditable(field);
+            });
+        }
+    });
+
+    function makeEditable(element) {
+        if (element.classList.contains('editing')) return;
+        
+        const originalText = element.innerText;
+        const fieldName = element.getAttribute('data-field');
+        
+        let input;
+        if (fieldName === 'message' || element.classList.contains('body-text')) {
+            input = document.createElement('textarea');
+            input.rows = 3;
+            input.style.width = '100%';
+            input.style.padding = '4px';
+            input.style.borderRadius = '6px';
+            input.style.border = '2px solid #f97316';
+            input.style.fontFamily = 'inherit';
+            input.style.fontSize = '10px';
+        } else {
+            input = document.createElement('input');
+            input.type = 'text';
+            input.style.width = '100%';
+            input.style.padding = '3px 5px';
+            input.style.borderRadius = '6px';
+            input.style.border = '2px solid #f97316';
+            input.style.fontFamily = 'inherit';
+            input.style.fontSize = 'inherit';
+        }
+        
+        input.value = originalText;
+        element.classList.add('editing');
+        
+        const displaySpan = document.createElement('span');
+        displaySpan.className = 'display-text';
+        displaySpan.innerText = originalText;
+        
+        element.innerHTML = '';
+        element.appendChild(displaySpan);
+        element.appendChild(input);
+        
+        input.focus();
+        
+        const saveEdit = () => {
+            const newValue = input.value;
+            if (newValue && newValue.trim() !== '') {
+                displaySpan.innerText = newValue;
+            }
+            element.classList.remove('editing');
+            element.removeChild(input);
+            if (fieldName) {
+                saveField(fieldName, displaySpan.innerText);
+            }
+        };
+        
+        input.addEventListener('blur', saveEdit);
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && fieldName !== 'message') {
+                saveEdit();
+            }
+        });
+    }
+
+    function saveField(fieldName, value) {
+        let data = JSON.parse(localStorage.getItem('letterheadData') || '{}');
+        data[fieldName] = value;
+        localStorage.setItem('letterheadData', JSON.stringify(data));
+    }
+
+    function saveAllChanges() {
+        const allEditable = document.querySelectorAll('.editable');
+        const data = {};
+        allEditable.forEach(field => {
+            const fieldName = field.getAttribute('data-field');
+            if (fieldName) {
+                const displaySpan = field.querySelector('.display-text');
+                data[fieldName] = displaySpan ? displaySpan.innerText : field.innerText;
+            }
+        });
+        localStorage.setItem('letterheadData', JSON.stringify(data));
+        
+        Swal.fire({
+            icon: 'success',
+            title: 'Saved!',
+            text: 'All your changes have been saved successfully.',
+            confirmButtonColor: '#f97316',
+            timer: 2000,
+            showConfirmButton: true
+        });
+    }
+
+    function loadSavedData() {
+        const savedData = JSON.parse(localStorage.getItem('letterheadData') || '{}');
+        const savedLogo = localStorage.getItem('companyLogo');
+        
+        // Load logo
+        const logoBox = document.getElementById('logoBox');
+        if (logoBox) {
+            if (savedLogo && savedLogo !== 'null' && savedLogo !== 'undefined' && savedLogo.length > 100) {
+                logoBox.innerHTML = `<img src="${savedLogo}" style="width:100%; height:100%; object-fit:contain;">`;
+            } else {
+                logoBox.innerHTML = `<img src="${defaultLogo}" style="width:100%; height:100%; object-fit:contain; padding: 12px;">`;
+            }
+        }
+        
+        // Load text fields
+        for (const [field, value] of Object.entries(savedData)) {
+            if (value && value.trim() !== '') {
+                const element = document.querySelector(`[data-field="${field}"]`);
+                if (element) {
+                    const displaySpan = element.querySelector('.display-text');
+                    if (displaySpan) {
+                        displaySpan.innerText = value;
+                    } else {
+                        element.innerText = value;
+                    }
+                }
+            }
+        }
+    }
+
+    function resetLetterhead() {
+        Swal.fire({
+            title: 'Reset Letterhead?',
+            text: 'This will restore all default content. Your changes will be lost.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#dc2626',
+            cancelButtonColor: '#64748b',
+            confirmButtonText: 'Yes, reset it',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem('letterheadData');
+                localStorage.removeItem('companyLogo');
+                location.reload();
+            }
+        });
+    }
+
+    function uploadLogo() {
+        Swal.fire({
+            title: 'Upload Company Logo',
+            html: '<input type="file" id="logoFileInput" accept="image/*" style="padding:10px; border:2px solid #e2e8f0; border-radius:10px; width:100%;">',
+            showCancelButton: true,
+            confirmButtonText: 'Upload',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#f97316',
+            preConfirm: () => {
+                const fileInput = document.getElementById('logoFileInput');
+                const file = fileInput.files[0];
+                if (!file) {
+                    Swal.showValidationMessage('Please select an image file');
+                    return false;
+                }
+                if (!file.type.match('image.*')) {
+                    Swal.showValidationMessage('Please select a valid image file');
+                    return false;
+                }
+                if (file.size > 2 * 1024 * 1024) {
+                    Swal.showValidationMessage('File size should be less than 2MB');
+                    return false;
+                }
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        localStorage.setItem('companyLogo', e.target.result);
+                        resolve(e.target.result);
+                    };
+                    reader.onerror = () => {
+                        Swal.showValidationMessage('Error reading file');
+                        resolve(false);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        }).then((result) => {
+            if (result.isConfirmed && result.value) {
+                const logoBox = document.getElementById('logoBox');
+                if (logoBox) {
+                    logoBox.innerHTML = `<img src="${result.value}" style="width:100%; height:100%; object-fit:contain;">`;
+                }
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Logo Updated!',
+                    text: 'Your company logo has been uploaded.',
+                    confirmButtonColor: '#f97316',
+                    timer: 1500
+                });
+            }
+        });
+    }
+
+    async function downloadPDF() {
+        const element = document.getElementById('letterContainer');
+        
+        if (!element) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Could not find letterhead content.',
+                confirmButtonColor: '#f97316'
+            });
+            return;
+        }
+        
+        // Close any editing states
+        document.querySelectorAll('.editable.editing').forEach(el => {
+            const input = el.querySelector('input, textarea');
+            if (input) {
+                const newValue = input.value;
+                const displaySpan = el.querySelector('.display-text');
+                if (displaySpan && newValue) {
+                    displaySpan.innerText = newValue;
+                }
+                el.classList.remove('editing');
+                if (input.parentNode) {
+                    el.removeChild(input);
+                }
+            }
+        });
+        
+        Swal.fire({
+            title: 'Generating PDF...',
+            text: 'Please wait while we prepare your A4 document.',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+        
+        setTimeout(async () => {
+            try {
+                const opt = {
+                    margin: [0, 0, 0, 0],
+                    filename: 'West_London_Security_Letterhead_A4.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { 
+                        scale: 2.5, 
+                        useCORS: true,
+                        letterRendering: true,
+                        logging: false,
+                        backgroundColor: '#ffffff'
+                    },
+                    jsPDF: { 
+                        unit: 'mm', 
+                        format: 'a4', 
+                        orientation: 'portrait' 
+                    },
+                    pagebreak: { mode: 'avoid-all' }
+                };
+                
+                await html2pdf().set(opt).from(element).save();
+                
+                Swal.fire({
+                    icon: 'success',
+                    title: 'PDF Downloaded!',
+                    text: 'Your A4 letterhead has been saved as PDF.',
+                    confirmButtonColor: '#f97316',
+                    timer: 2000
+                });
+            } catch (error) {
+                console.error('PDF Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'PDF Generation Failed',
+                    text: 'Please use the Print button (Ctrl+P) instead.',
+                    confirmButtonColor: '#f97316'
+                });
+            }
+        }, 200);
+    }
+
+    // Load saved data on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        loadSavedData();
+    });
+</script>
+</body>
+</html>
